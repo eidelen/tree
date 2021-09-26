@@ -15,3 +15,4 @@ IF(${TESTTREE})
     target_link_libraries(runTreeTests ${GTEST_LIBRARIES} )
     target_compile_features( runTreeTests PRIVATE cxx_range_for )
 ENDIF()
+
