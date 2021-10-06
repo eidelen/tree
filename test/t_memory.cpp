@@ -35,3 +35,20 @@ TEST(Child, HasNoChildAtInit)
     ASSERT_FALSE(n->hasLeftChild());
     ASSERT_FALSE(n->hasRightChild());
 }
+
+TEST(Child, CreateChildren)
+{
+    NodeInt n = createIntNode(5);
+    ASSERT_FALSE(n->hasLeftChild());
+    ASSERT_FALSE(n->hasRightChild());
+
+    NodeInt lc = n->setLeftChild(2);
+    ASSERT_TRUE(n->hasLeftChild());
+    ASSERT_EQ(lc.get(), n->leftChild().get());
+    ASSERT_EQ(lc->data(), 2);
+
+    NodeInt rc = n->setRightChild(3);
+    ASSERT_TRUE(n->hasRightChild());
+    ASSERT_EQ(rc.get(), n->rightChild().get());
+    ASSERT_EQ(rc->data(), 3);
+}

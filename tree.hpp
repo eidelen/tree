@@ -10,7 +10,6 @@ class Node
 
         Node(){}
 
-        
         /**
          * Create a node with data.
          * @param Passed data.
@@ -48,6 +47,28 @@ class Node
         {
             return m_data;
         }
+        
+        /**
+         * Set the left child. Existing tree beneath goes lost.
+         * @param data Data of the new left child node.
+         * @return New created node.
+         */
+        NodePtr setLeftChild(const T& data)
+        {
+            m_leftChild.reset(new Node<T>(data));
+            return m_leftChild;
+        }
+
+        /**
+         * Set the right child. Existing tree beneath goes lost.
+         * @param data Data of the new right child node.
+         * @return New created node.
+         */
+        NodePtr setRightChild(const T& data)
+        {
+            m_rightChild.reset(new Node<T>(data));
+            return m_rightChild;
+        }
 
         /**
          * Has node a left child.
@@ -77,5 +98,12 @@ class Node
         NodePtr m_rightChild;
         NodePtr m_leftChild;
         T m_data;       
+};
+
+
+template<class T>
+class BTNode: public Node<T>
+{
+
 };
 
