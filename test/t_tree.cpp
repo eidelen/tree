@@ -52,3 +52,32 @@ TEST(Child, CreateChildren)
     ASSERT_EQ(rc.get(), n->rightChild().get());
     ASSERT_EQ(rc->data(), 3);
 }
+
+void setDepthAsContent(NodeInt n, int depth, int maxDepth)
+{
+    if(depth < maxDepth)
+    {
+        setDepthAsContent( n->setLeftChild(depth+1), depth+1, maxDepth );
+        setDepthAsContent( n->setRightChild(depth+1), depth+1, maxDepth );
+    }
+}
+
+TEST(Tree, Connect)
+{
+    // Node content is its depth. Filled tree till level 2.
+    NodeInt r = createIntNode(0);
+    setDepthAsContent( r, 0, 2 );
+
+    ASSERT_EQ(r->data(), 0);
+    ASSERT_EQ(r->rightChild()->data(), 1);
+    ASSERT_EQ(r->leftChild()->data(), 1);
+    ASSERT_EQ(r->rightChild()->rightChild()->data(), 2);
+    ASSERT_EQ(r->rightChild()->leftChild()->data(), 2);
+    ASSERT_EQ(r->leftChild()->rightChild()->data(), 2);
+    ASSERT_EQ(r->leftChild()->leftChild()->data(), 2);
+
+    ASSERT_FALSE(r->rightChild()->rightChild()->hasLeftChild());
+    ASSERT_FALSE(r->rightChild()->leftChild()->hasLeftChild());
+    ASSERT_FALSE(r->leftChild()->rightChild()->hasLeftChild());
+    ASSERT_FALSE(r->leftChild()->leftChild()->hasLeftChild());
+}
