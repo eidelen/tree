@@ -76,8 +76,8 @@ TEST(Tree, Connect)
     ASSERT_EQ(r->leftChild()->rightChild()->data(), 2);
     ASSERT_EQ(r->leftChild()->leftChild()->data(), 2);
 
-    ASSERT_FALSE(r->rightChild()->rightChild()->hasLeftChild());
+    ASSERT_FALSE(r->rightChild()->rightChild()->hasRightChild());
     ASSERT_FALSE(r->rightChild()->leftChild()->hasLeftChild());
-    ASSERT_FALSE(r->leftChild()->rightChild()->hasLeftChild());
+    ASSERT_FALSE(r->leftChild()->rightChild()->hasRightChild());
     ASSERT_FALSE(r->leftChild()->leftChild()->hasLeftChild());
 }
