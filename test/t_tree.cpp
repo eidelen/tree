@@ -81,3 +81,32 @@ TEST(Tree, Connect)
     ASSERT_FALSE(r->leftChild()->rightChild()->hasRightChild());
     ASSERT_FALSE(r->leftChild()->leftChild()->hasLeftChild());
 }
+
+// Example Tree: 5 (3 (2, 4),  7 (6, 8))
+// Depth = 2; Nbr Elements = 7
+NodeInt getExampleTree()
+{
+    NodeInt r = createIntNode(5);
+
+    NodeInt l1 = r->setLeftChild(3);
+    l1->setLeftChild(2);
+    l1->setRightChild(4);
+
+    NodeInt r1 = r->setRightChild(7);
+    r1->setLeftChild(6);
+    r1->setRightChild(8);
+
+    return r;
+}
+
+TEST(Tree, DFS)
+{
+    // Node content is its depth. Filled tree till level 2.
+    NodeInt r = getExampleTree();
+
+    std::function<void(NodeInt)> nodeFunction = [](NodeInt n) {
+        std::cout << n->data() << ", ";
+    };
+
+    r->doDFS(nodeFunction);
+}

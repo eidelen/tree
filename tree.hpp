@@ -1,7 +1,8 @@
 #include <memory>
+#include <functional>
 
 template<class T>
-class Node
+class Node: public std::enable_shared_from_this<Node<T>>
 {
     private:
         using NodePtr = std::shared_ptr<Node<T>>;
@@ -86,6 +87,21 @@ class Node
         bool hasRightChild() const
         {
             return !isLeafNode(m_rightChild);
+        }
+
+        // Traversals
+
+        void doDFS(std::function<void(NodePtr)> nodeFunction)
+        {
+            nodeFunction(this->shared_from_this());
+            if(hasLeftChild())
+            {
+                leftChild()->doDFS(nodeFunction);
+            }
+            if(hasRightChild())
+            {
+                rightChild()->doDFS(nodeFunction);
+            }
         }
 
     private:
