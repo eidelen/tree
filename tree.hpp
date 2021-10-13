@@ -91,6 +91,11 @@ class Node: public std::enable_shared_from_this<Node<T>>
 
         // Traversals
 
+        /**
+         * This function visits the tree nodes in the depth first search order. The
+         * exact visit strategy is pre-order (current, left, right).
+         * @param  nodeFunction A custom function which is called at every node
+         */
         void doDFS(std::function<void(NodePtr)> nodeFunction)
         {
             nodeFunction(this->shared_from_this());

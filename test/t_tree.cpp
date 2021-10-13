@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 
+#include <vector>
+
 #include <tree.hpp>
+
 
 // test helpers
 using NodeInt = std::shared_ptr<Node<int>>;
@@ -104,9 +107,14 @@ TEST(Tree, DFS)
     // Node content is its depth. Filled tree till level 2.
     NodeInt r = getExampleTree();
 
-    std::function<void(NodeInt)> nodeFunction = [](NodeInt n) {
-        std::cout << n->data() << ", ";
+    std::vector<int> dataCollectionVec;
+    std::function<void(NodeInt)> nodeFunction = [&dataCollectionVec](NodeInt n) {
+        dataCollectionVec.push_back(n->data());
     };
-
+    
     r->doDFS(nodeFunction);
+
+    // DFS Traversal should finish nodes in this order
+    std::vector<int> resShould = {5, 3, 2, 4, 7, 6, 8} ;
+    ASSERT_TRUE(dataCollectionVec == resShould);
 }
