@@ -118,3 +118,20 @@ TEST(Tree, DFS)
     std::vector<int> resShould = {5, 3, 2, 4, 7, 6, 8} ;
     ASSERT_TRUE(dataCollectionVec == resShould);
 }
+
+TEST(Tree, CountElements)
+{
+    NodeInt r = getExampleTree(); // has 7 elements
+    ASSERT_EQ(r->count(), 7);
+
+    // increasing number of nodes
+    NodeInt n = createIntNode(0);
+    ASSERT_EQ(n->count(), 1);
+
+    NodeInt p = n;
+    for(int i = 2; i < 100; i++)
+    {
+        p = p->setLeftChild(0);
+        ASSERT_EQ(n->count(), i);
+    }
+}

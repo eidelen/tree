@@ -109,6 +109,23 @@ class Node: public std::enable_shared_from_this<Node<T>>
             }
         }
 
+        /**
+         * Counts the number of elements in the tree.
+         * @return Number of elements.
+         */
+        size_t count()
+        {
+            size_t s = 0;
+            std::function<void(NodePtr)> countFunc = [&s](NodePtr n)
+            {
+                s += 1;
+            };
+
+            doDFS(countFunc);
+
+            return s;
+        }
+
     private:
 
         bool isLeafNode(const NodePtr& node) const
