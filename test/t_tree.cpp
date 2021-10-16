@@ -146,3 +146,34 @@ TEST(Tree, DeleteElements)
     r->deleteRightChild();
     ASSERT_EQ(r->count(), 1);
 }
+
+TEST(Tree, FindFunction)
+{
+    NodeInt r = getExampleTree(); 
+
+    auto vs5 = r->findNodes([](int d)
+    {
+        return d < 5; // left branch of tree
+    });
+    ASSERT_EQ(vs5.size(), 3);
+
+    auto vb5 = r->findNodes([](int d)
+    {
+        return d > 5; // right branch of tree
+    });
+    ASSERT_EQ(vb5.size(), 3);
+
+    auto none = r->findNodes([](int d)
+    {
+        return d > 100; 
+    });
+    ASSERT_EQ(none.size(), 0);
+
+    auto specifics = r->findNodes([](int d)
+    {
+        return d == 3 || d == 6; 
+    });
+    ASSERT_EQ(specifics.size(), 2);
+    ASSERT_EQ(specifics[0]->data(), 3);
+    ASSERT_EQ(specifics[1]->data(), 6);
+}

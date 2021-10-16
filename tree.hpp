@@ -22,7 +22,6 @@ class Node: public std::enable_shared_from_this<Node<T>>
 
         ~Node()
         {
-            std::cout << data() << ",";
             deleteRightChild();
             deleteLeftChild();
         }
@@ -130,6 +129,28 @@ class Node: public std::enable_shared_from_this<Node<T>>
             {
                 rightChild()->doDFS(nodeFunction);
             }
+        }
+
+        /**
+         * Search the tree for nodes which fullfill statement.
+         * Note: This function traverses through the wohle tree (slow)!!
+         * @param Comparison function.
+         * @return returns vector with nodes.
+         */
+        std::vector<NodePtr> findNodes(std::function<bool(T)> cmpFunction) 
+        {
+            std::vector<NodePtr> nodes;
+            std::function<void(NodePtr)> findFunc = [&nodes, cmpFunction](NodePtr n)
+            {
+                if(cmpFunction(n->data()))
+                {
+                    nodes.push_back(n);
+                }
+            };
+
+            doDFS(findFunc);
+
+            return nodes;
         }
 
         /**
