@@ -20,6 +20,13 @@ class Node: public std::enable_shared_from_this<Node<T>>
         {
         }
 
+        ~Node()
+        {
+            std::cout << data() << ",";
+            deleteRightChild();
+            deleteLeftChild();
+        }
+
         /**
          * Get right child node. If leaf node, sp 
          * points to null.
@@ -69,6 +76,22 @@ class Node: public std::enable_shared_from_this<Node<T>>
         {
             m_rightChild.reset(new Node<T>(data));
             return m_rightChild;
+        }
+
+        /**
+         * Deletes the left child node and all its children.
+         */
+        void deleteLeftChild()
+        {
+            m_leftChild.reset();
+        }
+
+        /**
+         * Deletes the right child node and all its children.
+         */
+        void deleteRightChild()
+        {
+            m_rightChild.reset();
         }
 
         /**

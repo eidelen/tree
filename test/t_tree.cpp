@@ -135,3 +135,14 @@ TEST(Tree, CountElements)
         ASSERT_EQ(n->count(), i);
     }
 }
+
+TEST(Tree, DeleteElements)
+{
+    NodeInt r = getExampleTree(); // has 7 elements
+    
+    r->deleteLeftChild();
+    ASSERT_EQ(r->count(), 4);
+
+    r->deleteRightChild();
+    ASSERT_EQ(r->count(), 1);
+}
