@@ -108,7 +108,7 @@ TEST(Tree, DFS)
     NodeInt r = getExampleTree();
 
     std::vector<int> dataCollectionVec;
-    std::function<void(NodeInt)> nodeFunction = [&dataCollectionVec](NodeInt n) {
+    std::function<void(NodeInt, size_t)> nodeFunction = [&dataCollectionVec](NodeInt n, size_t ) {
         dataCollectionVec.push_back(n->data());
     };
     
@@ -176,4 +176,20 @@ TEST(Tree, FindFunction)
     ASSERT_EQ(specifics.size(), 2);
     ASSERT_EQ(specifics[0]->data(), 3);
     ASSERT_EQ(specifics[1]->data(), 6);
+}
+
+TEST(Tree, MaxDepth)
+{
+    NodeInt r = getExampleTree(); 
+    ASSERT_EQ(r->getDepth(), 2);
+
+    auto nNode = r->rightChild()->rightChild()->setRightChild(9);
+    ASSERT_EQ(r->getDepth(), 3);
+
+    nNode = nNode->setLeftChild(99);
+    ASSERT_EQ(r->getDepth(), 4);
+
+    nNode = nNode->setLeftChild(101);
+    nNode = nNode->setLeftChild(102);
+    ASSERT_EQ(r->getDepth(), 6);
 }

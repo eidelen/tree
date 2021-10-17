@@ -115,19 +115,22 @@ class Node: public std::enable_shared_from_this<Node<T>>
 
         /**
          * This function visits the tree nodes in the depth first search order. The
-         * exact visit strategy is pre-order (current, left, right).
+         * exact visit strategy is pre-order (current, left, right). At each node the
+         * passed function is called. The current node's depth is known and passend 
+         * to the custom function too.
          * @param  nodeFunction A custom function which is called at every node
+         * @param  depth Current depth within the tree traversal. 
          */
-        void doDFS(std::function<void(NodePtr)> nodeFunction)
+        void doDFS(std::function<void(NodePtr, size_t)> nodeFunction, size_t depth = 0)
         {
-            nodeFunction(this->shared_from_this());
+            nodeFunction(this->shared_from_this(), depth);
             if(hasLeftChild())
             {
-                leftChild()->doDFS(nodeFunction);
+                leftChild()->doDFS(nodeFunction, depth+1);
             }
             if(hasRightChild())
             {
-                rightChild()->doDFS(nodeFunction);
+                rightChild()->doDFS(nodeFunction, depth+1);
             }
         }
 
@@ -140,7 +143,7 @@ class Node: public std::enable_shared_from_this<Node<T>>
         std::vector<NodePtr> findNodes(std::function<bool(T)> cmpFunction) 
         {
             std::vector<NodePtr> nodes;
-            std::function<void(NodePtr)> findFunc = [&nodes, cmpFunction](NodePtr n)
+            std::function<void(NodePtr, size_t)> findFunc = [&nodes, cmpFunction](NodePtr n, size_t)
             {
                 if(cmpFunction(n->data()))
                 {
@@ -149,7 +152,6 @@ class Node: public std::enable_shared_from_this<Node<T>>
             };
 
             doDFS(findFunc);
-
             return nodes;
         }
 
@@ -160,14 +162,30 @@ class Node: public std::enable_shared_from_this<Node<T>>
         size_t count()
         {
             size_t s = 0;
-            std::function<void(NodePtr)> countFunc = [&s](NodePtr n)
+            std::function<void(NodePtr, size_t)> countFunc = [&s](NodePtr n, size_t)
             {
                 s += 1;
             };
 
             doDFS(countFunc);
-
             return s;
+        }
+
+        
+        /**
+         * Compute the maximum depth of the tree.
+         * @return Max depth of the tree.
+         */
+        size_t getDepth()
+        {
+            size_t maxDepth = 0;
+            std::function<void(NodePtr, size_t)> maxDepthFunc = [&maxDepth](NodePtr, size_t currentDepth)
+            {
+                maxDepth = std::max(maxDepth, currentDepth);
+            };
+
+            doDFS(maxDepthFunc);
+            return maxDepth;
         }
 
     private:
