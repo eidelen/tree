@@ -193,3 +193,11 @@ TEST(Tree, MaxDepth)
     nNode = nNode->setLeftChild(102);
     ASSERT_EQ(r->getDepth(), 6);
 }
+
+
+TEST(Tree, PrintTree)
+{
+    NodeInt r = getExampleTree();
+    r->print();
+    // visual check :)
+}

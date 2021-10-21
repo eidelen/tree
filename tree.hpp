@@ -188,6 +188,38 @@ class Node: public std::enable_shared_from_this<Node<T>>
             return maxDepth;
         }
 
+
+        /**
+         * Prints tree horicontally
+         */
+        void print()
+        {
+            print("", false);
+        }
+
+        /**
+         * Recursive helper function for print()
+         */
+        void print(const std::string& prefix, bool isLeft)
+        {
+            std::cout << prefix;
+
+            std::cout << (isLeft ? "├──" : "└──" );
+
+            // print the value of the node
+            std::cout << data() << std::endl;
+
+            // enter the next tree level - left and right branch
+            if(hasLeftChild())
+            {
+                leftChild()->print( prefix + (isLeft ? "│   " : "    "), true);
+            }
+            if(hasRightChild())
+            {
+                rightChild()->print(prefix + (isLeft ? "│   " : "    "), false);
+            }
+        }
+
     private:
 
         bool isLeafNode(const NodePtr& node) const
