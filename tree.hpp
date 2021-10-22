@@ -47,6 +47,15 @@ class Node: public std::enable_shared_from_this<Node<T>>
         }
 
         /**
+         * Set the data of this node.
+         * @param data The new data of this node.
+         */
+        void setData(const T& data)
+        {
+            m_data = data;
+        }
+
+        /**
          * Return stored node data.
          * @return Node data
          */

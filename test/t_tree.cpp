@@ -201,3 +201,13 @@ TEST(Tree, PrintTree)
     r->print();
     // visual check :)
 }
+
+TEST(Tree, Setdata)
+{
+    NodeInt r = createIntNode(6);
+    ASSERT_EQ(r->data(), 6);
+
+    r->setData(7);
+    ASSERT_EQ(r->data(), 7);
+}
+
